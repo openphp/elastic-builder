@@ -5,55 +5,63 @@ namespace Openphp\ElasticBuilder\Utils;
 class Number
 {
     /**
-     * 百分比字符串
-     * @param string $num1
-     * @param string $num2
+     * @param $n
+     * @return bool
+     */
+    public static function is_number($n)
+    {
+        if (is_int($n) || is_long($n) || is_float($n) || is_double($n))
+            return true;
+        return false;
+    }
+
+    /**
+     * @param $numerator
+     * @param $denominator
+     * @param $precision
+     * @return float|int
+     */
+    public static function percent($numerator, $denominator, $precision = 2)
+    {
+        if (empty($denominator) || empty($numerator) || !static::is_number($numerator) || !static::is_number($denominator)) {
+            return 0;
+        }
+        return round($numerator * 100 / $denominator, $precision);
+    }
+
+    /**
+     * @param $numerator
+     * @param $denominator
+     * @param $precision
      * @return string
      */
-    public static function percentageString($num1, $num2)
+    public static function percentString($numerator, $denominator, $precision = 2)
     {
-        return static::percentage($num1, $num2) . '%';
+        return static::percent($numerator, $denominator, $precision) . '%';
     }
 
     /**
-     * 百分比
-     * @param string $num1
-     * @param string $num2
-     * @param int $scale
-     * @return string
+     * @param $n
+     * @param $d
+     * @param $precision
+     * @return float|int
      */
-    public static function percentage($num1, $num2, $scale = 2)
+    public static function division($n, $d, $precision = 2)
     {
-        return static::bcmul(static::bcdiv($num1, $num2, 6), 100, $scale);
-    }
-
-    /**
-     * bcdiv — 2个任意精度的数字除法计算
-     * @param string $left_operand
-     * @param string $right_operand
-     * @param int $scale
-     * @return int|string|null
-     */
-    public static function bcdiv($left_operand, $right_operand, $scale = 2)
-    {
-        if ($right_operand && $left_operand) {
-            return bcdiv($left_operand, $right_operand, $scale);
+        if (empty($n) || empty($d) || !static::is_number($n) || !static::is_number($d)) {
+            return 0;
         }
-        return 0;
+        return round($n / $d, $precision);
     }
 
     /**
-     * bcmul — 2个任意精度数字乘法计算
-     * @param string $num1
-     * @param string $num2
-     * @param int $scale
-     * @return int|string
+     * @param $new
+     * @param $old
+     * @param $precision
+     * @return float|int
      */
-    public static function bcmul($num1, $num2, $scale = 0)
+    public static function increase($new, $old, $precision = 2)
     {
-        if ($num1 && $num2) {
-            return bcmul($num1, $num2, $scale);
-        }
-        return 0;
+        return static::percent($new - $old, $old, $precision);
     }
 }

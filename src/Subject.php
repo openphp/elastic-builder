@@ -91,7 +91,7 @@ abstract class Subject
 
     /**
      * @param string|array $indicators
-     * @param array        $request
+     * @param array $request
      * @return  $this
      */
     public function setIndicators($indicators, array $request = [])
@@ -138,7 +138,7 @@ abstract class Subject
 
     /**
      * @param string $field
-     * @param int    $size
+     * @param int $size
      * @return TermsSearcher
      */
     public function searchSingleTerms($field, $size = 20)
@@ -162,6 +162,14 @@ abstract class Subject
     }
 
     /**
+     * year（1y）年
+     * quarter（1q）季度
+     * month（1M）月份
+     * week（1w）星期
+     * day（1d）天
+     * hour（1h）小时
+     * minute（1m）分钟
+     * second（1s）秒
      * @param $field
      * @param $interval
      * @param $min_doc_count
@@ -184,7 +192,7 @@ abstract class Subject
 
     /**
      * @param string $name group_by_create_time
-     * @param array  $date
+     * @param array $date
      *  [
      *    'date_histogram' => [
      *        'field' => 'create_time',
@@ -192,7 +200,7 @@ abstract class Subject
      *        'format'=>'yyyy-MM-dd',
      *     ]
      *  ]
-     * @param array  $fields
+     * @param array $fields
      * ['name'=>['size'=>2],'sex'=>['size'=>1]]
      * ['name','sex']
      * ['name','sex'=>['size'=>1]]

@@ -98,4 +98,23 @@ class Arr
         }
         return $results;
     }
+
+    /**
+     * @param ...$arrays
+     * @return array
+     */
+    public static function merge(...$arrays)
+    {
+        $rest = [];
+        foreach ($arrays as $arr) {
+            foreach ($arr as $key => $val) {
+                if (empty($rest[$key])) {
+                    $rest[$key] = $val;
+                } else {
+                    $rest[$key] = array_merge($val, $rest[$key]);
+                }
+            }
+        }
+        return $rest;
+    }
 }
